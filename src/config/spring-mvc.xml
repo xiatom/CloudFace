@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 	扫描controller,并且扫描其中的注解 -->
+	<!-- 	扫描base-package包或者子包下的所有controller类，并把匹配的controller类注册为bean -->
+	<context:component-scan base-package="com.ace.action" />
+	
+<!-- 	此注解会自动注册RequestMappingHandlerMapping 和 RequestMappingHandlerAdapter两个bean -->
+<!-- 	是SpringMVC为@controller分发请求所必需的 -->
+	<mvc:annotation-driven />
+	
+<!-- 	配置jsp，显示ViewResolver -->
+<!-- InternalResourceViewResolver：最常用的视图解析器，当控制层返回hello时自动为其添加前缀和后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<mvc:default-servlet-handler />
+	
+	<mvc:view-controller path="/user/home" view-name="/home"/>
+	
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<property name="maxUploadSize" value="104857600"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+</beans>

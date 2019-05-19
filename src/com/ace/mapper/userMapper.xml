@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mabatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ace.mapper.UserMapper">
+	<select id="checkUser" parameterType="User" resultType="User">
+		select u_id id,u_name username,u_password password,u_role role from t_user where u_name=#{username} and u_password=#{password}
+	</select>
+	
+	<select id="getUsers" resultType="User">
+		select u_id id,u_name username,u_password password,u_role role from t_user
+	</select>
+	
+	<select id="getUserById"  parameterType="int" resultType="User">
+		select u_id id,u_name username,u_password password,u_role role from t_user where u_id=#{id}
+	</select>
+	
+	<update id="modifyUser"  parameterType="User">
+		update t_user set u_name=#{username},u_role=#{role} where u_id=#{id}
+	</update>
+	
+	<delete id="delUser" parameterType="int">
+		delete from t_user where u_id=#{id}
+	</delete>
+	
+	<insert id="addUser" parameterType="User">
+		insert into t_user(u_name,u_password,u_role) values(#{username},#{password},#{role})
+	</insert>
+</mapper>
